@@ -2,6 +2,8 @@
 
 A screenshot tool for COSMIC Desktop that integrates [Satty](https://github.com/gabm/Satty) annotation tool with grim and slurp for a seamless screenshot workflow.
 
+![Demo Screenshot](screenshots/demo.png)
+
 ## Features
 
 - 🖱️ **Unified Selection**: Click to capture full monitor, or drag to select a region

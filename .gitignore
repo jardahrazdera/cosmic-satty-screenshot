@@ -24,3 +24,9 @@ screenshots/*.jpeg
 
 # Keep the screenshots directory but not its contents
 !screenshots/.gitkeep
+
+# Allow demo screenshot
+!screenshots/demo.png
+
+# Project overview (internal documentation)
+PROJECT_OVERVIEW.md
