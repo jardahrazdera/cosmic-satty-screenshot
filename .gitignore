@@ -1,0 +1,26 @@
+# Temporary files
+*.tmp
+*.temp
+*~
+.*.swp
+.*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-*
+
+# Log files
+*.log
+
+# Test screenshots (don't commit demo screenshots to git)
+screenshots/*.png
+screenshots/*.jpg
+screenshots/*.jpeg
+
+# Keep the screenshots directory but not its contents
+!screenshots/.gitkeep

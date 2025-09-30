@@ -1,0 +1,54 @@
+#!/bin/bash
+# Screenshot with grim+slurp and annotate with satty
+# Click to select monitor, or drag to select region
+
+# Ensure we have the proper environment
+export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-0}"
+
+# Set screenshots directory
+OUTPUT_DIR="$HOME/Screenshots"
+
+# Create screenshots directory if it doesn't exist
+mkdir -p "$OUTPUT_DIR"
+
+# Temp file for screenshot
+TEMP_FILE="/tmp/screenshot-$(date +'%s').png"
+FINAL_FILE="$OUTPUT_DIR/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png"
+
+# Capture screenshot - unified mode with slurp -o
+# Click to select monitor, or drag to select region
+GEOMETRY=$(slurp -o 2>&1)
+EXIT_CODE=$?
+
+if [[ $EXIT_CODE -eq 0 ]] && [[ -n "$GEOMETRY" ]] && ! echo "$GEOMETRY" | grep -q "selection cancelled"; then
+  grim -g "$GEOMETRY" "$TEMP_FILE"
+else
+  exit 0
+fi
+
+# Open in satty if screenshot was captured
+if [[ -f "$TEMP_FILE" ]] && [[ -s "$TEMP_FILE" ]]; then
+  # Get image dimensions
+  DIMENSIONS=$(identify -format "%wx%h" "$TEMP_FILE" 2>/dev/null)
+  WIDTH=$(echo "$DIMENSIONS" | cut -d'x' -f1)
+  HEIGHT=$(echo "$DIMENSIONS" | cut -d'x' -f2)
+
+  # Set minimum dimensions (e.g., 800x600)
+  MIN_WIDTH=800
+  MIN_HEIGHT=600
+
+  # If image is smaller than minimum, pad it with transparent border
+  if [[ "$WIDTH" -lt "$MIN_WIDTH" ]] || [[ "$HEIGHT" -lt "$MIN_HEIGHT" ]]; then
+    magick "$TEMP_FILE" -background none -gravity center -extent "${MIN_WIDTH}x${MIN_HEIGHT}" "$TEMP_FILE"
+  fi
+
+  satty --filename "$TEMP_FILE" \
+    --output-filename "$FINAL_FILE" \
+    --copy-command 'wl-copy' \
+    --early-exit
+  rm -f "$TEMP_FILE"
+else
+  notify-send "Screenshot failed" "No image was captured" -u critical -t 3000
+  rm -f "$TEMP_FILE"
+  exit 1
+fi
