@@ -14,7 +14,19 @@ A screenshot tool for COSMIC Desktop that integrates [Satty](https://github.com/
 
 ## Why This Project?
 
-COSMIC Desktop (as of Alpha 3) has known issues with custom keyboard shortcuts not properly spawning commands. This tool provides a reliable workaround by using a `.desktop` file launcher, ensuring your screenshot workflow works flawlessly.
+COSMIC Desktop (currently in Beta) has known issues with custom keyboard shortcuts not properly spawning commands. This tool provides a reliable workaround by using a `.desktop` file launcher, ensuring your screenshot workflow works flawlessly.
+
+## Coexistence with Native COSMIC Screenshot
+
+This tool works **alongside** the native `cosmic-screenshot` tool rather than replacing it, giving you the flexibility to choose the right tool for the job:
+
+- **Native COSMIC Screenshot** (Print key) → Quick, simple screenshots without annotation
+- **cosmic-satty-screenshot** (your custom shortcut) → Full annotation workflow with Satty
+
+This dual-tool setup means you can:
+- Use the native tool for fast captures when you don't need editing
+- Use Satty workflow when you need to annotate, draw, add text, or make edits
+- Keep both tools configured simultaneously without conflicts
 
 ## Dependencies
 
